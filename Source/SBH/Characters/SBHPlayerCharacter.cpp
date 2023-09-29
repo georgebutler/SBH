@@ -4,7 +4,9 @@
 #include "Components/CapsuleComponent.h"
 #include "EnhancedInputComponent.h"
 #include "EnhancedInputSubsystems.h"
+#include "GameFramework/CharacterMovementComponent.h"
 #include "Kismet/KismetMathLibrary.h"
+#include "SBH/Stats/StatsComponent.h"
 
 ASBHPlayerCharacter::ASBHPlayerCharacter()
 {
@@ -30,6 +32,10 @@ ASBHPlayerCharacter::ASBHPlayerCharacter()
 void ASBHPlayerCharacter::BeginPlay()
 {
 	Super::BeginPlay();
+	
+	UStatsComponent* Stats = GetStatsComponent();
+	check(Stats);
+	Stats->OnHealthZero.AddDynamic(this, &ASBHPlayerCharacter::OnCharacterDied);
 }
 
 void ASBHPlayerCharacter::Tick(const float DeltaTime)
@@ -70,6 +76,33 @@ void ASBHPlayerCharacter::DestroyPlayerInputComponent()
 			Subsystem->RemoveMappingContext(InputMappingContext);
 		}
 	}
+}
+
+void ASBHPlayerCharacter::FellOutOfWorld(const UDamageType& DmgType)
+{
+	OnCharacterDied();
+}
+
+void ASBHPlayerCharacter::OnCharacterDied()
+{
+	OnDied.Broadcast();
+	
+	UCharacterMovementComponent* CharacterMovementComponent = GetCharacterMovement();
+	CharacterMovementComponent->StopMovementImmediately();
+	CharacterMovementComponent->DisableMovement();
+	
+	GetWorldTimerManager().SetTimer(TimerHandleRespawn, this, &ASBHPlayerCharacter::OnCharacterRespawned, 3.0f, false);
+}
+
+void ASBHPlayerCharacter::OnCharacterRespawned()
+{
+	ASBHPlayerCharacter* NewCharacter = CastChecked<ASBHPlayerCharacter>(GetWorld()->SpawnActor(PlayerCharacter));
+	AController* CurrentController = GetController();
+
+	DetachFromControllerPendingDestroy();
+	CurrentController->Possess(NewCharacter);
+	OnRespawned.Broadcast(NewCharacter);
+	Destroy();
 }
 
 void ASBHPlayerCharacter::Move(const FInputActionValue& Input)

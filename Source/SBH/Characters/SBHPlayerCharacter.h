@@ -9,6 +9,9 @@ class UInputAction;
 class UInputMappingContext;
 class UCameraComponent;
 
+DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnDied);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnRespawned, ASBHCharacter*, NewCharacter);
+
 UCLASS()
 class SBH_API ASBHPlayerCharacter : public ASBHCharacter
 {
@@ -17,16 +20,35 @@ class SBH_API ASBHPlayerCharacter : public ASBHCharacter
 public:
 	ASBHPlayerCharacter();
 
+	UPROPERTY(BlueprintAssignable)
+	FOnDied OnDied;
+
+	UPROPERTY(BlueprintAssignable)
+	FOnRespawned OnRespawned;
+
 protected:
 	virtual void BeginPlay() override;
 	virtual void Tick(float DeltaTime) override;
 	virtual void SetupPlayerInputComponent(UInputComponent* PlayerInputComponent) override;
 	virtual void DestroyPlayerInputComponent() override;
-
+	virtual void FellOutOfWorld(const UDamageType& DmgType) override;
+	
 	void Move(const FInputActionValue& Input);
 	void Look(const FInputActionValue& Input);
 
 private:
+	UPROPERTY()
+	FTimerHandle TimerHandleRespawn;
+
+	UFUNCTION()
+	void OnCharacterDied();
+	
+	UFUNCTION()
+	void OnCharacterRespawned();
+	
+	UPROPERTY(BlueprintReadOnly, EditDefaultsOnly, Meta = (AllowPrivateAccess = "true"))
+	TSubclassOf<ASBHPlayerCharacter> PlayerCharacter;
+	
 	UPROPERTY(BlueprintReadOnly, EditDefaultsOnly, Meta = (AllowPrivateAccess = "true"))
 	TObjectPtr<UInputMappingContext> InputMappingContext;
 	
@@ -35,8 +57,6 @@ private:
 
 	UPROPERTY(BlueprintReadOnly, VisibleAnywhere, meta = (AllowPrivateAccess = "true"))
 	TObjectPtr<USkeletalMeshComponent> FirstPersonArms;
-
-	// Input
 	
 	UPROPERTY(BlueprintReadOnly, EditDefaultsOnly, Meta = (AllowPrivateAccess = "true"))
 	TObjectPtr<UInputAction> MoveAction;

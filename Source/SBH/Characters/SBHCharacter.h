@@ -14,12 +14,11 @@ class SBH_API ASBHCharacter : public AModularCharacter
 public:
 	ASBHCharacter();
 
+	UStatsComponent* GetStatsComponent() const;
+
 protected:
 	virtual void BeginPlay() override;
 	virtual void SetupPlayerInputComponent(UInputComponent* PlayerInputComponent) override;
-
-	UFUNCTION()
-	virtual void OnHealthZero();
 
 private:
 	UPROPERTY(BlueprintReadOnly, VisibleAnywhere, Meta = (AllowPrivateAccess = "true"))

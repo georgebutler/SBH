@@ -1,7 +1,7 @@
 ﻿#pragma once
 
 #include "CoreMinimal.h"
-#include "Components/ActorComponent.h"
+#include "Components/PawnComponent.h"
 #include "StatsComponent.generated.h"
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FOnMaxHealthChanged, float, OldMaxHealth, float, NewMaxHealth);
@@ -9,12 +9,12 @@ DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FOnHealthChanged, float, OldHealth,
 DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnHealthZero);
 
 UCLASS(ClassGroup=(Custom), meta=(BlueprintSpawnableComponent))
-class SBH_API UStatsComponent : public UActorComponent
+class SBH_API UStatsComponent : public UPawnComponent
 {
 	GENERATED_BODY()
 
 public:
-	UStatsComponent();
+	UStatsComponent(const FObjectInitializer& ObjectInitializer);
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, SaveGame)
 	float Health;

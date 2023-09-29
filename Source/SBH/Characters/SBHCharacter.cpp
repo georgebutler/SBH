@@ -1,7 +1,6 @@
 ﻿#include "SBHCharacter.h"
 
 #include "Components/CapsuleComponent.h"
-#include "GameFramework/CharacterMovementComponent.h"
 #include "SBH/Stats/StatsComponent.h"
 
 static FName GName_SBHharacterCollisionProfile_Capsule(TEXT("SBHPawnCapsule"));
@@ -29,9 +28,6 @@ ASBHCharacter::ASBHCharacter()
 void ASBHCharacter::BeginPlay()
 {
 	Super::BeginPlay();
-
-	check(StatsComponent);
-	StatsComponent->OnHealthZero.AddDynamic(this, &ASBHCharacter::OnHealthZero);
 }
 
 void ASBHCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
@@ -39,21 +35,7 @@ void ASBHCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCompon
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
 }
 
-void ASBHCharacter::OnHealthZero()
+UStatsComponent* ASBHCharacter::GetStatsComponent() const
 {
-	if (Controller)
-	{
-		Controller->SetIgnoreMoveInput(true);
-	}
-
-	UCapsuleComponent* CapsuleComp = GetCapsuleComponent();
-	check(CapsuleComp);
-	CapsuleComp->SetCollisionEnabled(ECollisionEnabled::NoCollision);
-	CapsuleComp->SetCollisionResponseToAllChannels(ECR_Ignore);
-
-	UCharacterMovementComponent* MovementComponent = GetCharacterMovement();
-	check(MovementComponent);
-	MovementComponent->StopMovementImmediately();
-	MovementComponent->DisableMovement();
+	return StatsComponent;
 }
-

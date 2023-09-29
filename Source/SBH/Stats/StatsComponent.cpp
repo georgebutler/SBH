@@ -1,6 +1,6 @@
 ﻿#include "StatsComponent.h"
 
-UStatsComponent::UStatsComponent()
+UStatsComponent::UStatsComponent(const FObjectInitializer& ObjectInitializer) : Super(ObjectInitializer)
 {
 	PrimaryComponentTick.bCanEverTick = false;
 	PrimaryComponentTick.bStartWithTickEnabled = false;
@@ -26,6 +26,8 @@ void UStatsComponent::HandleAnyDamage(AActor* DamagedActor, float Damage, const 
 	{
 		const float OldHealth = Health;
 		Health -= Damage;
+		
+		UE_LOG(LogTemp, Warning, TEXT("Health Changed: %f -> %f"), OldHealth, Health);
 	
 		if (Health <= 0.0f)
 		{
