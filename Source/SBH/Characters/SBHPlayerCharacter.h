@@ -4,6 +4,7 @@
 #include "SBHCharacter.h"
 #include "SBHPlayerCharacter.generated.h"
 
+class UInteractionComponent;
 struct FInputActionValue;
 class UInputAction;
 class UInputMappingContext;
@@ -35,6 +36,7 @@ protected:
 	
 	void Move(const FInputActionValue& Input);
 	void Look(const FInputActionValue& Input);
+	void Interact(const FInputActionValue& Input);
 
 private:
 	UPROPERTY()
@@ -60,6 +62,12 @@ private:
 
 	UPROPERTY(BlueprintReadOnly, EditDefaultsOnly, Category = "Player Character|Input", Meta = (AllowPrivateAccess = "true"))
 	TObjectPtr<UInputAction> JumpAction;
+
+	UPROPERTY(BlueprintReadOnly, EditDefaultsOnly, Category = "Player Character|Input", Meta = (AllowPrivateAccess = "true"))
+	TObjectPtr<UInputAction> InteractAction;
+
+	UPROPERTY(BlueprintReadOnly, VisibleAnywhere, Meta = (AllowPrivateAccess = "true"))
+	TObjectPtr<UInteractionComponent> InteractionComponent;
 	
 	UPROPERTY(BlueprintReadOnly, VisibleAnywhere, meta = (AllowPrivateAccess = "true"))
 	TObjectPtr<UCameraComponent> FirstPersonCamera;

@@ -4,9 +4,10 @@
 #include "Components/CapsuleComponent.h"
 #include "EnhancedInputComponent.h"
 #include "EnhancedInputSubsystems.h"
-#include "Blueprint/UserWidget.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "Kismet/KismetMathLibrary.h"
+#include "SBH/Interaction/Interactable.h"
+#include "SBH/Interaction/InteractionComponent.h"
 #include "SBH/Stats/StatsComponent.h"
 
 ASBHPlayerCharacter::ASBHPlayerCharacter()
@@ -28,6 +29,8 @@ ASBHPlayerCharacter::ASBHPlayerCharacter()
 	FirstPersonArms->SetRelativeLocation(FVector(0, 0, -160));
 	FirstPersonArms->SetRelativeRotation(FRotator(0.0f, -90.0f, 0.0f));
 	FirstPersonArms->CastShadow = false;
+
+	InteractionComponent = CreateDefaultSubobject<UInteractionComponent>(TEXT("InteractionComponent"));
 }
 
 void ASBHPlayerCharacter::BeginPlay()
@@ -62,6 +65,7 @@ void ASBHPlayerCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInput
 			EnhancedInput->BindAction(LookAction, ETriggerEvent::Triggered, this, &ASBHPlayerCharacter::Look);
 			EnhancedInput->BindAction(JumpAction, ETriggerEvent::Started, this, &ASBHPlayerCharacter::Jump);
 			EnhancedInput->BindAction(JumpAction, ETriggerEvent::Completed, this, &ASBHPlayerCharacter::StopJumping);
+			EnhancedInput->BindAction(InteractAction, ETriggerEvent::Triggered, this, &ASBHPlayerCharacter::Interact);
 		}
 	}
 }
@@ -126,5 +130,26 @@ void ASBHPlayerCharacter::Look(const FInputActionValue& Input)
 	
 	AddControllerYawInput(InputValue.X);
 	AddControllerPitchInput(InputValue.Y);
+}
+
+void ASBHPlayerCharacter::Interact(const FInputActionValue& Input)
+{
+	const UStatsComponent* Stats = GetStatsComponent();
+	check(Stats);
+
+	if (!Stats->bIsAlive) { return; }
+
+	const UInteractionComponent* Interaction = InteractionComponent;
+	check(Interaction);
+
+	AActor* InteractionActor = Interaction->GetInteractionActor();
+
+	if (IsValid(InteractionActor))
+	{
+		if (InteractionActor->GetClass()->ImplementsInterface(UInteractable::StaticClass()))
+		{
+			IInteractable::Execute_OnInteract(InteractionActor);
+		}
+	}
 }
 
