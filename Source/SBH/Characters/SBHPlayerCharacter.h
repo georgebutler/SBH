@@ -12,7 +12,7 @@ class UCameraComponent;
 DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnDied);
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnRespawned, ASBHCharacter*, NewCharacter);
 
-UCLASS()
+UCLASS(Abstract, Blueprintable)
 class SBH_API ASBHPlayerCharacter : public ASBHCharacter
 {
 	GENERATED_BODY()
@@ -46,24 +46,24 @@ private:
 	UFUNCTION()
 	void OnCharacterRespawned();
 	
-	UPROPERTY(BlueprintReadOnly, EditDefaultsOnly, Meta = (AllowPrivateAccess = "true"))
+	UPROPERTY(BlueprintReadOnly, EditDefaultsOnly, Category = "Player Character", Meta = (AllowPrivateAccess = "true"))
 	TSubclassOf<ASBHPlayerCharacter> PlayerCharacter;
 	
-	UPROPERTY(BlueprintReadOnly, EditDefaultsOnly, Meta = (AllowPrivateAccess = "true"))
+	UPROPERTY(BlueprintReadOnly, EditDefaultsOnly, Category = "Player Character|Input", Meta = (AllowPrivateAccess = "true"))
 	TObjectPtr<UInputMappingContext> InputMappingContext;
+
+	UPROPERTY(BlueprintReadOnly, EditDefaultsOnly, Category = "Player Character|Input", Meta = (AllowPrivateAccess = "true"))
+	TObjectPtr<UInputAction> MoveAction;
+
+	UPROPERTY(BlueprintReadOnly, EditDefaultsOnly, Category = "Player Character|Input", Meta = (AllowPrivateAccess = "true"))
+	TObjectPtr<UInputAction> LookAction;
+
+	UPROPERTY(BlueprintReadOnly, EditDefaultsOnly, Category = "Player Character|Input", Meta = (AllowPrivateAccess = "true"))
+	TObjectPtr<UInputAction> JumpAction;
 	
 	UPROPERTY(BlueprintReadOnly, VisibleAnywhere, meta = (AllowPrivateAccess = "true"))
 	TObjectPtr<UCameraComponent> FirstPersonCamera;
 
 	UPROPERTY(BlueprintReadOnly, VisibleAnywhere, meta = (AllowPrivateAccess = "true"))
 	TObjectPtr<USkeletalMeshComponent> FirstPersonArms;
-	
-	UPROPERTY(BlueprintReadOnly, EditDefaultsOnly, Meta = (AllowPrivateAccess = "true"))
-	TObjectPtr<UInputAction> MoveAction;
-
-	UPROPERTY(BlueprintReadOnly, EditDefaultsOnly, Meta = (AllowPrivateAccess = "true"))
-	TObjectPtr<UInputAction> LookAction;
-
-	UPROPERTY(BlueprintReadOnly, EditDefaultsOnly, Meta = (AllowPrivateAccess = "true"))
-	TObjectPtr<UInputAction> JumpAction;
 };

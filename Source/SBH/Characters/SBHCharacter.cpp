@@ -3,7 +3,7 @@
 #include "Components/CapsuleComponent.h"
 #include "SBH/Stats/StatsComponent.h"
 
-static FName GName_SBHharacterCollisionProfile_Capsule(TEXT("SBHPawnCapsule"));
+static FName GName_SBHCharacterCollisionProfile_Capsule(TEXT("SBHPawnCapsule"));
 static FName GName_SBHCharacterCollisionProfile_Mesh(TEXT("SBHPawnMesh"));
 
 ASBHCharacter::ASBHCharacter()
@@ -14,7 +14,7 @@ ASBHCharacter::ASBHCharacter()
 	UCapsuleComponent* CapsuleComp = GetCapsuleComponent();
 	check(CapsuleComp);
 	CapsuleComp->InitCapsuleSize(55.0f, 96.0f);
-	CapsuleComp->SetCollisionProfileName(GName_SBHharacterCollisionProfile_Capsule);
+	CapsuleComp->SetCollisionProfileName(GName_SBHCharacterCollisionProfile_Capsule);
 
 	USkeletalMeshComponent* MeshComp = GetMesh();
 	check(MeshComp);
