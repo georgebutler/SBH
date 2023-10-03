@@ -1,5 +1,7 @@
 ﻿#include "StatsComponent.h"
 
+#include "SBH/SBHLogChannels.h"
+
 UStatsComponent::UStatsComponent(const FObjectInitializer& ObjectInitializer) : Super(ObjectInitializer)
 {
 	PrimaryComponentTick.bCanEverTick = false;
@@ -27,7 +29,7 @@ void UStatsComponent::HandleAnyDamage(AActor* DamagedActor, float Damage, const 
 		const float OldHealth = Health;
 		Health -= Damage;
 		
-		UE_LOG(LogTemp, Warning, TEXT("Health Changed: %f -> %f"), OldHealth, Health);
+		UE_LOG(LogSBH, Verbose, TEXT("Health Changed: %f -> %f"), OldHealth, Health);
 	
 		if (Health <= 0.0f)
 		{

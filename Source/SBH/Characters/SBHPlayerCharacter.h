@@ -4,6 +4,7 @@
 #include "SBHCharacter.h"
 #include "SBHPlayerCharacter.generated.h"
 
+class UEquipmentManagerComponent;
 class UInteractionComponent;
 struct FInputActionValue;
 class UInputAction;
@@ -68,6 +69,9 @@ private:
 
 	UPROPERTY(BlueprintReadOnly, VisibleAnywhere, Meta = (AllowPrivateAccess = "true"))
 	TObjectPtr<UInteractionComponent> InteractionComponent;
+
+	UPROPERTY(BlueprintReadOnly, VisibleAnywhere, Meta = (AllowPrivateAccess = "true"))
+	TObjectPtr<UEquipmentManagerComponent> EquipmentManagerComponent;
 	
 	UPROPERTY(BlueprintReadOnly, VisibleAnywhere, meta = (AllowPrivateAccess = "true"))
 	TObjectPtr<UCameraComponent> FirstPersonCamera;

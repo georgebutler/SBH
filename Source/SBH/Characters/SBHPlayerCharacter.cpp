@@ -6,6 +6,7 @@
 #include "EnhancedInputSubsystems.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "Kismet/KismetMathLibrary.h"
+#include "SBH/Equipment/EquipmentManagerComponent.h"
 #include "SBH/Interaction/Interactable.h"
 #include "SBH/Interaction/InteractionComponent.h"
 #include "SBH/Stats/StatsComponent.h"
@@ -31,6 +32,7 @@ ASBHPlayerCharacter::ASBHPlayerCharacter()
 	FirstPersonArms->CastShadow = false;
 
 	InteractionComponent = CreateDefaultSubobject<UInteractionComponent>(TEXT("InteractionComponent"));
+	EquipmentManagerComponent = CreateDefaultSubobject<UEquipmentManagerComponent>(TEXT("EquipmentManagerComponent"));
 }
 
 void ASBHPlayerCharacter::BeginPlay()

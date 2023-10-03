@@ -2,7 +2,6 @@
 
 #include "Blueprint/UserWidget.h"
 #include "SBH/Characters/SBHPlayerCharacter.h"
-#include "SBH/UI/SBHUserWidgetHUD.h"
 
 ASBHPlayerController::ASBHPlayerController()
 {
@@ -21,9 +20,12 @@ void ASBHPlayerController::OnPossess(APawn* InPawn)
 		{
 			PlayerCharacterWidgetInstance->RemoveFromParent();
 		}
-	
-		PlayerCharacterWidgetInstance = CreateWidget(GetWorld(), PlayerCharacterWidget);
-		PlayerCharacterWidgetInstance->AddToViewport();
+
+		if (PlayerCharacterWidget)
+		{
+			PlayerCharacterWidgetInstance = CreateWidget(GetWorld(), PlayerCharacterWidget);
+			PlayerCharacterWidgetInstance->AddToViewport();
+		}
 	}
 }
 
