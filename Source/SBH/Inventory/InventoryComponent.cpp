@@ -15,40 +15,48 @@ TArray<FInventoryItem> UInventoryComponent::GetContents()
 
 bool UInventoryComponent::AddItem(UItemData* ItemData, int Quantity)
 {
-	for (auto& Item : Contents)
+	if (IsValid(ItemData))
 	{
-		if (Item.Data->GetClass() == ItemData->GetClass())
+		for (auto& Item : Contents)
 		{
-			Item.Quantity += Quantity;
-			OnContentsUpdated.Broadcast();
-			return true;
+			if (Item.Data->GetFName() == ItemData->GetFName())
+			{
+				Item.Quantity += Quantity;
+				OnContentsUpdated.Broadcast();
+				return true;
+			}
 		}
-	}
 	
-	FInventoryItem NewItem;
-	NewItem.Data = ItemData;
-	NewItem.Quantity = Quantity;
-	Contents.Add(NewItem);
-	OnContentsUpdated.Broadcast();
-	return true;
+		FInventoryItem NewItem;
+		NewItem.Data = ItemData;
+		NewItem.Quantity = Quantity;
+		Contents.Add(NewItem);
+		OnContentsUpdated.Broadcast();
+		return true;	
+	}
+
+	return false;
 }
 
 bool UInventoryComponent::RemoveItem(UItemData* ItemData, int Quantity)
 {
-	for (auto& Item : Contents)
+	if (IsValid(ItemData))
 	{
-		if (Item.Data->GetClass() == ItemData->GetClass())
+		for (auto& Item : Contents)
 		{
-			Item.Quantity -= Quantity;
-			
-			if (Item.Quantity <= 0)
+			if (Item.Data->GetFName() == ItemData->GetFName())
 			{
-				Contents.Remove(Item);
-			}
+				Item.Quantity -= FMath::Max(Quantity, 1);
+			
+				if (Item.Quantity <= 0)
+				{
+					Contents.Remove(Item);
+				}
 
-			OnContentsUpdated.Broadcast();
-			return true;
-		}
+				OnContentsUpdated.Broadcast();
+				return true;
+			}
+		}	
 	}
 
 	return false;
@@ -56,11 +64,14 @@ bool UInventoryComponent::RemoveItem(UItemData* ItemData, int Quantity)
 
 FInventoryItem UInventoryComponent::GetItem(UItemData* ItemData)
 {
-	for (const auto& Item : Contents)
+	if (IsValid(ItemData))
 	{
-		if (Item.Data->GetClass() == ItemData->GetClass())
+		for (const auto& Item : Contents)
 		{
-			return Item;
+			if (Item.Data->GetFName() == ItemData->GetFName())
+			{
+				return Item;
+			}
 		}
 	}
 	

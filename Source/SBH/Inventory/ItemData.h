@@ -4,7 +4,7 @@
 #include "Engine/DataAsset.h"
 #include "ItemData.generated.h"
 
-UCLASS(BlueprintType, Blueprintable)
+UCLASS(BlueprintType)
 class SBH_API UItemData : public UDataAsset
 {
 	GENERATED_BODY()
@@ -12,9 +12,9 @@ class SBH_API UItemData : public UDataAsset
 public:
 	UItemData();
 
-	UPROPERTY(BlueprintReadWrite, EditDefaultsOnly)
+	UPROPERTY(EditAnywhere)
 	FText DisplayName;
 
-	UPROPERTY(BlueprintReadWrite, EditDefaultsOnly)
+	UPROPERTY(EditAnywhere)
 	FText DisplayDescription;
 };

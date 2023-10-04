@@ -41,10 +41,10 @@ public:
 	TArray<FInventoryItem> GetContents();
 
 	UFUNCTION(BlueprintCallable)
-	bool AddItem(UItemData* ItemData, int Quantity);
+	bool AddItem(UItemData* ItemData, int Quantity = 1);
 
 	UFUNCTION(BlueprintCallable)
-	bool RemoveItem(UItemData* ItemData, int Quantity);
+	bool RemoveItem(UItemData* ItemData, int Quantity = 1);
 	
 	UFUNCTION(BlueprintCallable)
 	FInventoryItem GetItem(UItemData* ItemData);

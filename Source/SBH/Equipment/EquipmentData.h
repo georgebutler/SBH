@@ -7,7 +7,7 @@
 
 class AEquipmentInstance;
 
-UCLASS(BlueprintType, Blueprintable)
+UCLASS(BlueprintType)
 class SBH_API UEquipmentData : public UItemData
 {
 	GENERATED_BODY()
@@ -15,6 +15,6 @@ class SBH_API UEquipmentData : public UItemData
 public:
 	UEquipmentData();
 
-	UPROPERTY(BlueprintReadWrite, EditDefaultsOnly)
+	UPROPERTY(EditAnywhere)
 	TSoftClassPtr<AEquipmentInstance> SoftClassPtr;
 };
