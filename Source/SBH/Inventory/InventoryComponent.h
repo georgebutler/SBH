@@ -1,6 +1,7 @@
 ﻿#pragma once
 
 #include "CoreMinimal.h"
+#include "ItemData.h"
 #include "Components/PawnComponent.h"
 #include "InventoryComponent.generated.h"
 
@@ -14,10 +15,15 @@ struct FInventoryItem
 	GENERATED_BODY()
 
 	UPROPERTY(BlueprintReadWrite, VisibleAnywhere)
-	TObjectPtr<UItemData> Data;
+	TObjectPtr<UItemData> Data = nullptr;
 	
 	UPROPERTY(BlueprintReadWrite, VisibleAnywhere)
-	int Quantity;
+	int Quantity = 0;
+
+	bool operator == (const FInventoryItem& OtherItem) const
+	{
+		return OtherItem.Data->GetClass() == Data->GetClass();
+	}
 };
 
 UCLASS(ClassGroup=(Custom), meta=(BlueprintSpawnableComponent))
@@ -41,8 +47,9 @@ public:
 	bool RemoveItem(UItemData* ItemData, int Quantity);
 	
 	UFUNCTION(BlueprintCallable)
-	FInventoryItem* GetItem(UItemData* ItemData);
+	FInventoryItem GetItem(UItemData* ItemData);
 	
 private:
+	UPROPERTY()
 	TArray<FInventoryItem> Contents;
 };

@@ -1,5 +1,7 @@
 ﻿#include "InventoryComponent.h"
 
+#include "ItemData.h"
+
 UInventoryComponent::UInventoryComponent(const FObjectInitializer& ObjectInitializer) : Super(ObjectInitializer)
 {
 	PrimaryComponentTick.bCanEverTick = false;
@@ -15,7 +17,7 @@ bool UInventoryComponent::AddItem(UItemData* ItemData, int Quantity)
 {
 	for (auto& Item : Contents)
 	{
-		if (Item.Data == ItemData)
+		if (Item.Data->GetClass() == ItemData->GetClass())
 		{
 			Item.Quantity += Quantity;
 			OnContentsUpdated.Broadcast();
@@ -35,7 +37,7 @@ bool UInventoryComponent::RemoveItem(UItemData* ItemData, int Quantity)
 {
 	for (auto& Item : Contents)
 	{
-		if (Item.Data == ItemData)
+		if (Item.Data->GetClass() == ItemData->GetClass())
 		{
 			Item.Quantity -= Quantity;
 			
@@ -52,15 +54,15 @@ bool UInventoryComponent::RemoveItem(UItemData* ItemData, int Quantity)
 	return false;
 }
 
-FInventoryItem* UInventoryComponent::GetItem(UItemData* ItemData)
+FInventoryItem UInventoryComponent::GetItem(UItemData* ItemData)
 {
-	for (auto& Item : Contents)
+	for (const auto& Item : Contents)
 	{
-		if (Item.Data == ItemData)
+		if (Item.Data->GetClass() == ItemData->GetClass())
 		{
-			return &Item;
+			return Item;
 		}
 	}
-
-	return nullptr;
+	
+	return FInventoryItem();
 }
