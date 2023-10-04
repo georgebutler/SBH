@@ -17,7 +17,10 @@ public class SBH : ModuleRules
 			"ModularGameplay",
 			"ModularGameplayActors",
 			"EnhancedInput",
-			"UMG"
+			"UMG",
+			
+			"EasyMultiSave",
+			"DialoguePlugin"
 		});
 
 		PrivateDependencyModuleNames.AddRange(new string[] {  });

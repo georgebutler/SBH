@@ -31,5 +31,5 @@ public:
 	FInteractionInfo GetInteractionInfo();
 
 	UFUNCTION(BlueprintCallable, BlueprintImplementableEvent, Category = "Interaction")
-	void OnInteract();
+	void OnInteract(AActor* InteractionActor);
 };

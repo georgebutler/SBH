@@ -9,6 +9,7 @@
 #include "SBH/Equipment/EquipmentManagerComponent.h"
 #include "SBH/Interaction/Interactable.h"
 #include "SBH/Interaction/InteractionComponent.h"
+#include "SBH/Inventory/InventoryComponent.h"
 #include "SBH/Stats/StatsComponent.h"
 
 ASBHPlayerCharacter::ASBHPlayerCharacter()
@@ -32,6 +33,7 @@ ASBHPlayerCharacter::ASBHPlayerCharacter()
 	FirstPersonArms->CastShadow = false;
 
 	InteractionComponent = CreateDefaultSubobject<UInteractionComponent>(TEXT("InteractionComponent"));
+	InventoryComponent = CreateDefaultSubobject<UInventoryComponent>(TEXT("InventoryComponent"));
 	EquipmentManagerComponent = CreateDefaultSubobject<UEquipmentManagerComponent>(TEXT("EquipmentManagerComponent"));
 }
 
@@ -150,7 +152,7 @@ void ASBHPlayerCharacter::Interact(const FInputActionValue& Input)
 	{
 		if (InteractionActor->GetClass()->ImplementsInterface(UInteractable::StaticClass()))
 		{
-			IInteractable::Execute_OnInteract(InteractionActor);
+			IInteractable::Execute_OnInteract(InteractionActor, this);
 		}
 	}
 }

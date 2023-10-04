@@ -4,6 +4,8 @@
 #include "Components/PawnComponent.h"
 #include "EquipmentManagerComponent.generated.h"
 
+class AEquipmentInstance;
+class UEquipmentData;
 class UEquipmentInstance;
 
 UCLASS(ClassGroup=(Custom), meta=(BlueprintSpawnableComponent))
@@ -15,6 +17,6 @@ public:
 	UEquipmentManagerComponent(const FObjectInitializer& ObjectInitializer);
 
 private:
-	UPROPERTY()
-	TObjectPtr<UEquipmentInstance> PrimaryWeapon;
+	UPROPERTY(SaveGame)
+	TObjectPtr<UEquipmentData> PrimaryWeapon;
 };
