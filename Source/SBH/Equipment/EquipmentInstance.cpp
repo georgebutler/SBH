@@ -5,3 +5,11 @@ AEquipmentInstance::AEquipmentInstance(const FObjectInitializer& ObjectInitializ
 	PrimaryActorTick.bCanEverTick = true;
 	PrimaryActorTick.bStartWithTickEnabled = true;
 }
+
+void AEquipmentInstance::Unequip_Implementation(ACharacter* Character)
+{
+}
+
+void AEquipmentInstance::Equip_Implementation(ACharacter* Character)
+{
+}

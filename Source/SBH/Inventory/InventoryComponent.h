@@ -37,7 +37,10 @@ public:
 	UPROPERTY(BlueprintAssignable)
 	FOnContentsUpdated OnContentsUpdated;
 	
-	UFUNCTION(BlueprintCallable)
+	UFUNCTION(BlueprintPure)
+	static UInventoryComponent* FindInventoryComponent(const AActor* Actor) { return (Actor ? Actor->FindComponentByClass<UInventoryComponent>() : nullptr); }
+	
+	UFUNCTION(BlueprintPure)
 	TArray<FInventoryItem> GetContents();
 
 	UFUNCTION(BlueprintCallable)

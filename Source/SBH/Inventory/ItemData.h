@@ -12,9 +12,9 @@ class SBH_API UItemData : public UDataAsset
 public:
 	UItemData();
 
-	UPROPERTY(EditAnywhere)
+	UPROPERTY(BlueprintReadOnly, EditAnywhere)
 	FText DisplayName;
 
-	UPROPERTY(EditAnywhere)
+	UPROPERTY(BlueprintReadOnly, EditAnywhere)
 	FText DisplayDescription;
 };

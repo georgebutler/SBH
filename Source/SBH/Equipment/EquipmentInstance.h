@@ -4,9 +4,6 @@
 #include "UObject/Object.h"
 #include "EquipmentInstance.generated.h"
 
-DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnEquipped);
-DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnUnequipped);
-
 UCLASS(BlueprintType, Blueprintable)
 class SBH_API AEquipmentInstance : public AActor
 {
@@ -15,9 +12,9 @@ class SBH_API AEquipmentInstance : public AActor
 public:
 	AEquipmentInstance(const FObjectInitializer& ObjectInitializer = FObjectInitializer::Get());
 
-	UPROPERTY(BlueprintAssignable)
-	FOnEquipped OnEquipped;
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
+	void Equip(ACharacter* Character);
 
-	UPROPERTY(BlueprintAssignable)
-	FOnUnequipped OnUnequipped;
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
+	void Unequip(ACharacter* Character);
 };

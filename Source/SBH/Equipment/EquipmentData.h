@@ -15,6 +15,6 @@ class SBH_API UEquipmentData : public UItemData
 public:
 	UEquipmentData();
 
-	UPROPERTY(EditAnywhere)
+	UPROPERTY(BlueprintReadOnly, EditAnywhere)
 	TSoftClassPtr<AEquipmentInstance> SoftClassPtr;
 };

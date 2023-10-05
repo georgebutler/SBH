@@ -16,6 +16,9 @@ class SBH_API UStatsComponent : public UPawnComponent
 public:
 	UStatsComponent(const FObjectInitializer& ObjectInitializer);
 
+	UFUNCTION(BlueprintPure)
+	static UStatsComponent* FindStatsComponent(const AActor* Actor) { return (Actor ? Actor->FindComponentByClass<UStatsComponent>() : nullptr); }
+
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, SaveGame)
 	float Health;
 

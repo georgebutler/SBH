@@ -14,6 +14,9 @@ class SBH_API UInteractionComponent : public UPawnComponent
 public:
 	UInteractionComponent(const FObjectInitializer& ObjectInitializer);
 
+	UFUNCTION(BlueprintPure)
+	static UInteractionComponent* FindInteractionComponent(const AActor* Actor) { return (Actor ? Actor->FindComponentByClass<UInteractionComponent>() : nullptr); }
+
 	AActor* GetInteractionActor() const;
 
 	UPROPERTY(BlueprintAssignable)

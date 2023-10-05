@@ -10,7 +10,7 @@ struct FInteractionInfo
 	GENERATED_BODY()
 	
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
-	bool bCanInteract;
+	bool bCanInteract = true;
 
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
 	FText InteractionText;
