@@ -31,8 +31,8 @@ public:
 	UPROPERTY(BlueprintReadOnly, EditAnywhere)
 	TSoftClassPtr<AEquipmentInstance> SoftClassPtr;
 
-	FString ToString() const
+	virtual FString ToString() const override
 	{
-		return FString::Printf(TEXT("EquipmentSlot: %d"), static_cast<int32>(EquipmentSlot));
+		return UItemData::ToString() + ", " + FString::Printf(TEXT("EquipmentSlot: %d"), static_cast<int32>(EquipmentSlot));
 	}
 };

@@ -82,8 +82,7 @@ void UEquipmentManagerComponent::EquipItem(UEquipmentData* EquipmentData, FEquip
 	
 	if (Slot.Instance) 
 	{
-		Slot.Instance->Unequip(OwningCharacter);
-		Slot.Instance = nullptr;
+		UnequipItem(Slot, Slot.Data, OwningCharacter);
 	}
 
 	Slot.Instance = NewObject<AEquipmentInstance>(this, EquipmentData->SoftClassPtr.LoadSynchronous());

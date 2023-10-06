@@ -20,4 +20,9 @@ public:
 
 	UPROPERTY(BlueprintReadOnly, EditAnywhere)
 	TObjectPtr<UTexture2D> Icon;
+
+	virtual FString ToString() const
+	{
+		return FString::Printf(TEXT("ItemName: %s"), *GetFName().ToString());
+	}
 };

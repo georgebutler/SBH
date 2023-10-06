@@ -1,6 +1,7 @@
 ﻿#include "InventoryComponent.h"
 
 #include "ItemData.h"
+#include "SBH/SBHLogChannels.h"
 
 UInventoryComponent::UInventoryComponent(const FObjectInitializer& ObjectInitializer) : Super(ObjectInitializer)
 {
@@ -15,6 +16,8 @@ TArray<FInventoryItem> UInventoryComponent::GetContents()
 
 bool UInventoryComponent::AddItem(UItemData* ItemData, const int Quantity)
 {
+	UE_LOG(LogSBHInventory, Log, TEXT("AddItem called with ItemData: %s, Quantity: %d"), *ItemData->ToString(), Quantity);
+	
 	if (IsValid(ItemData))
 	{
 		for (auto& Item : Contents)
@@ -40,6 +43,8 @@ bool UInventoryComponent::AddItem(UItemData* ItemData, const int Quantity)
 
 bool UInventoryComponent::RemoveItem(UItemData* ItemData, const int Quantity)
 {
+	UE_LOG(LogSBHInventory, Log, TEXT("RemoveItem called with ItemData: %s, Quantity: %d"), *ItemData->ToString(), Quantity);
+	
 	if (IsValid(ItemData))
 	{
 		for (int i = 0; i < Contents.Num(); ++i)
@@ -64,6 +69,8 @@ bool UInventoryComponent::RemoveItem(UItemData* ItemData, const int Quantity)
 
 FInventoryItem UInventoryComponent::GetItem(UItemData* ItemData)
 {
+	UE_LOG(LogSBHInventory, Log, TEXT("GetItem called with ItemData: %s"), *ItemData->ToString());
+	
 	if (IsValid(ItemData))
 	{
         for (const auto& Item : Contents)
