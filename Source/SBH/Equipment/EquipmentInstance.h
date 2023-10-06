@@ -11,6 +11,9 @@ class SBH_API AEquipmentInstance : public AActor
 
 public:
 	AEquipmentInstance(const FObjectInitializer& ObjectInitializer = FObjectInitializer::Get());
+	
+	UPROPERTY(BlueprintReadOnly, EditDefaultsOnly)
+	FName AttachmentSocket;
 
 	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
 	void Equip(ACharacter* Character);
