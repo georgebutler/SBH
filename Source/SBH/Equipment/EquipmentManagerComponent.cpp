@@ -3,6 +3,7 @@
 #include "EquipmentData.h"
 #include "EquipmentInstance.h"
 #include "GameFramework/Character.h"
+#include "SBH/SBHLogChannels.h"
 #include "SBH/Inventory/InventoryComponent.h"
 
 UEquipmentManagerComponent::UEquipmentManagerComponent(const FObjectInitializer& ObjectInitializer) : Super(ObjectInitializer)
@@ -77,6 +78,8 @@ void UEquipmentManagerComponent::Unequip(UItemData* ItemData)
 
 void UEquipmentManagerComponent::EquipItem(UEquipmentData* EquipmentData, FEquippedItem& Slot, ACharacter* OwningCharacter)
 {
+	UE_LOG(LogSBHEquipment, Log, TEXT("EquipItem called with EquipmentData: %s, Slot: %s, OwningCharacter: %s"), *EquipmentData->ToString(), *Slot.ToString(), *OwningCharacter->GetName());
+	
 	if (Slot.Instance) 
 	{
 		Slot.Instance->Unequip(OwningCharacter);
@@ -90,6 +93,8 @@ void UEquipmentManagerComponent::EquipItem(UEquipmentData* EquipmentData, FEquip
 
 void UEquipmentManagerComponent::EquipWeapon(UEquipmentData* EquipmentData, ACharacter* OwningCharacter)
 {
+	UE_LOG(LogSBHEquipment, Log, TEXT("EquipWeapon called with EquipmentData: %s, OwningCharacter: %s"), *EquipmentData->ToString(), *OwningCharacter->GetName());
+	
 	if (!EquippedPrimaryWeapon.Instance)
 	{
 		EquipItem(EquipmentData, EquippedPrimaryWeapon, OwningCharacter);
@@ -106,6 +111,8 @@ void UEquipmentManagerComponent::EquipWeapon(UEquipmentData* EquipmentData, ACha
 
 void UEquipmentManagerComponent::UnequipItem(FEquippedItem& Slot, UEquipmentData* EquipmentData, ACharacter* OwningCharacter)
 {
+	UE_LOG(LogSBHEquipment, Log, TEXT("UnequipItem called with Slot: %s, EquipmentData: %s, OwningCharacter: %s"), *Slot.ToString(), *EquipmentData->ToString(), *OwningCharacter->GetName());
+	
 	if (Slot.Instance && Slot.Data == EquipmentData)
 	{
 		Slot.Instance->Unequip(OwningCharacter);
@@ -116,6 +123,8 @@ void UEquipmentManagerComponent::UnequipItem(FEquippedItem& Slot, UEquipmentData
 
 void UEquipmentManagerComponent::UnequipWeapon(UEquipmentData* EquipmentData, ACharacter* OwningCharacter)
 {
+	UE_LOG(LogSBHEquipment, Log, TEXT("UnequipWeapon called with EquipmentData: %s, OwningCharacter: %s"), *EquipmentData->ToString(), *OwningCharacter->GetName());
+	
 	if (EquippedPrimaryWeapon.Data == EquipmentData)
 	{
 		UnequipItem(EquippedPrimaryWeapon, EquipmentData, OwningCharacter);

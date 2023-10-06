@@ -30,4 +30,9 @@ public:
 	
 	UPROPERTY(BlueprintReadOnly, EditAnywhere)
 	TSoftClassPtr<AEquipmentInstance> SoftClassPtr;
+
+	FString ToString() const
+	{
+		return FString::Printf(TEXT("EquipmentSlot: %d"), static_cast<int32>(EquipmentSlot));
+	}
 };

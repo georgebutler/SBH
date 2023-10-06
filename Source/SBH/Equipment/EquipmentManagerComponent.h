@@ -2,6 +2,7 @@
 
 #include "CoreMinimal.h"
 #include "EquipmentData.h"
+#include "EquipmentInstance.h"
 #include "Components/PawnComponent.h"
 #include "EquipmentManagerComponent.generated.h"
 
@@ -20,6 +21,11 @@ struct FEquippedItem
 
 	UPROPERTY()
 	TObjectPtr<AEquipmentInstance> Instance;
+
+	FString ToString() const
+	{
+		return FString::Printf(TEXT("Instance: %s, Data: %s"), Instance ? *Instance->GetName() : TEXT("None"), Data ? *Data->GetName() : TEXT("None"));
+	}
 };
 
 UCLASS(ClassGroup=(Custom), meta=(BlueprintSpawnableComponent))

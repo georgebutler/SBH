@@ -17,4 +17,7 @@ public:
 
 	UPROPERTY(BlueprintReadOnly, EditAnywhere)
 	FText DisplayDescription;
+
+	UPROPERTY(BlueprintReadOnly, EditAnywhere)
+	TObjectPtr<UTexture2D> Icon;
 };
