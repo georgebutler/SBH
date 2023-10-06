@@ -7,6 +7,16 @@
 
 class AEquipmentInstance;
 
+UENUM(BlueprintType)
+enum EEquipmentSlot
+{
+	Weapon,
+	Helmet,
+	Armor,
+	Grenade,
+	Consumable,
+};
+
 UCLASS(BlueprintType)
 class SBH_API UEquipmentData : public UItemData
 {
@@ -15,6 +25,9 @@ class SBH_API UEquipmentData : public UItemData
 public:
 	UEquipmentData();
 
+	UPROPERTY(BlueprintReadOnly, EditAnywhere)
+	TEnumAsByte<EEquipmentSlot> EquipmentSlot;
+	
 	UPROPERTY(BlueprintReadOnly, EditAnywhere)
 	TSoftClassPtr<AEquipmentInstance> SoftClassPtr;
 };
