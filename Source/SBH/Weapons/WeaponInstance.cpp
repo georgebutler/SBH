@@ -5,6 +5,7 @@
 #include "KismetTraceUtils.h"
 #include "Animation/AnimInstanceProxy.h"
 #include "GameFramework/Character.h"
+#include "Kismet/GameplayStatics.h"
 #include "SBH/SBHLogChannels.h"
 
 AWeaponInstance::AWeaponInstance(const FObjectInitializer& ObjectInitializer) : Super(ObjectInitializer)
@@ -66,9 +67,10 @@ void AWeaponInstance::FirePrimary()
 	
 	if(HitResult.bBlockingHit)
 	{
-		if (HitResult.GetActor())
+		if (AActor* HitActor = HitResult.GetActor())
 		{
-			UE_LOG(LogSBHEquipment, Log, TEXT("Hit Actor: %s"), *HitResult.GetActor()->GetName());
+			UE_LOG(LogSBHEquipment, Verbose, TEXT("Hit Actor: %s"), *HitActor->GetName());
+			UGameplayStatics::ApplyPointDamage(HitActor, FirePrimaryDamage, HitResult.Normal * -1.0f, HitResult, EquippedCharacter->GetController(), this, PrimaryDamageType);
 		}
 	}
 }

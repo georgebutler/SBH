@@ -28,6 +28,12 @@ public:
 
 	UPROPERTY(BlueprintReadOnly, EditDefaultsOnly)
 	float FirePrimaryRange = 10000.0f;
+
+	UPROPERTY(BlueprintReadOnly, EditDefaultsOnly)
+	float FirePrimaryDamage = 15.0f;
+
+	UPROPERTY(BlueprintReadOnly, EditDefaultsOnly)
+	TSubclassOf<UDamageType> PrimaryDamageType;
 	
 	UPROPERTY(BlueprintReadOnly, EditDefaultsOnly)
 	TEnumAsByte<EWeaponFiringMode> FiringMode;
