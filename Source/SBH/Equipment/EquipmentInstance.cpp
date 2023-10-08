@@ -19,9 +19,9 @@ void AEquipmentInstance::Equip_Implementation(ACharacter* Character)
 	AttachToComponent(Character->GetMesh(), AttachmentRules, AttachmentSocket);
 }
 
-
 void AEquipmentInstance::Unequip_Implementation()
 {
+	check(EquippedCharacter);
 	UE_LOG(LogSBHEquipment, Log, TEXT("Unequip on %s called with Character: %s"), *GetName(), *EquippedCharacter->GetName());
 
 	EquippedCharacter = nullptr;

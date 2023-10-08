@@ -8,6 +8,13 @@ struct FInputActionValue;
 class UInputAction;
 class UInputMappingContext;
 
+UENUM(BlueprintType)
+enum EWeaponFiringMode
+{
+	SemiAutomatic,
+	Automatic
+};
+
 UCLASS(BlueprintType, Blueprintable)
 class SBH_API AWeaponInstance : public AEquipmentInstance
 {
@@ -15,6 +22,15 @@ class SBH_API AWeaponInstance : public AEquipmentInstance
 
 public:
 	AWeaponInstance(const FObjectInitializer& ObjectInitializer = FObjectInitializer::Get());
+
+	UPROPERTY(BlueprintReadOnly, EditDefaultsOnly)
+	float FirePrimaryDelay = 0.2f;
+
+	UPROPERTY(BlueprintReadOnly, EditDefaultsOnly)
+	float FirePrimaryRange = 10000.0f;
+	
+	UPROPERTY(BlueprintReadOnly, EditDefaultsOnly)
+	TEnumAsByte<EWeaponFiringMode> FiringMode;
 
 	virtual void Equip_Implementation(ACharacter* Character) override;
 	virtual void Unequip_Implementation() override;
@@ -35,6 +51,8 @@ public:
 	void Reload(const FInputActionValue& Input);
 
 private:
+	FTimerHandle FirePrimaryTimerHandle;
+	
 	UPROPERTY(BlueprintReadOnly, EditDefaultsOnly, Meta = (AllowPrivateAccess = "true"))
 	TObjectPtr<UInputMappingContext> InputMappingContext;
 
@@ -46,4 +64,7 @@ private:
 
 	UPROPERTY(BlueprintReadOnly, EditDefaultsOnly, Meta = (AllowPrivateAccess = "true"))
 	TObjectPtr<UInputAction> ReloadAction;
+
+	UFUNCTION()
+	void FirePrimary();
 };

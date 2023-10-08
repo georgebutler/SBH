@@ -14,7 +14,7 @@ public:
 	
 	UPROPERTY(BlueprintReadOnly, EditDefaultsOnly)
 	FName AttachmentSocket;
-
+	
 	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
 	void Equip(ACharacter* Character);
 

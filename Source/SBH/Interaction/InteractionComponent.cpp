@@ -31,8 +31,7 @@ void UInteractionComponent::TickComponent(float DeltaTime, ELevelTick TickType, 
 		Owner->GetActorEyesViewPoint(Start, EyeRotation);
 		End = Start + EyeRotation.Vector() * 400.f;
 		World->LineTraceSingleByChannel(HitResult, Start, End, ECC_Visibility, CollisionParams);
-
-		// DrawDebugLine(GetWorld(), HitResult.TraceStart, HitResult.TraceEnd, FColor(255, 0, 0), false, 1, 1, 3.f);
+		// DrawDebugLineTraceSingle(GetWorld(), HitResult.TraceStart, HitResult.TraceEnd, EDrawDebugTrace::ForOneFrame, true, HitResult, FColor(255, 0, 0), FColor(255, 0, 0), 1.0f);
 		
 		AActor* HitActor = HitResult.GetActor();
 		
