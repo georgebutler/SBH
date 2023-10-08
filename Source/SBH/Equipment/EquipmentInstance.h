@@ -19,5 +19,9 @@ public:
 	void Equip(ACharacter* Character);
 
 	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
-	void Unequip(ACharacter* Character);
+	void Unequip();
+
+protected:
+	UPROPERTY(BlueprintReadOnly)
+	TObjectPtr<ACharacter> EquippedCharacter;
 };

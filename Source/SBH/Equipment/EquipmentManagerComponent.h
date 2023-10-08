@@ -16,12 +16,12 @@ struct FEquippedItem
 {
 	GENERATED_BODY()
 
-	UPROPERTY()
+	UPROPERTY(BlueprintReadOnly, VisibleAnywhere)
 	TObjectPtr<UEquipmentData> Data;
 
-	UPROPERTY()
+	UPROPERTY(BlueprintReadOnly, VisibleAnywhere)
 	TObjectPtr<AEquipmentInstance> Instance;
-
+	
 	FString ToString() const
 	{
 		return FString::Printf(TEXT("Instance: %s, Data: %s"), Instance ? *Instance->GetName() : TEXT("None"), Data ? *Data->GetName() : TEXT("None"));
@@ -65,8 +65,8 @@ public:
 
 private:
 	void EquipItem(UEquipmentData* EquipmentData, FEquippedItem& Slot, ACharacter* OwningCharacter);
-	void UnequipItem(FEquippedItem& Slot, UEquipmentData* EquipmentData, ACharacter* OwningCharacter);
+	void UnequipItem(FEquippedItem& Slot, UEquipmentData* EquipmentData);
 	
 	void EquipWeapon(UEquipmentData* EquipmentData, ACharacter* OwningCharacter);
-	void UnequipWeapon(UEquipmentData* EquipmentData, ACharacter* OwningCharacter);
+	void UnequipWeapon(UEquipmentData* EquipmentData);
 };
